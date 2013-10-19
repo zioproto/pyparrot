@@ -1,3 +1,8 @@
+"""
+This is a small code that started from here:
+http://stackoverflow.com/questions/18406570/python-record-audio-on-detected-sound
+"""
+
 import pyaudio
 import math
 import struct
@@ -6,7 +11,7 @@ import sys
 
 
 #Assuming Energy threshold upper than 30 dB
-Threshold = 25
+Threshold = 30
 
 SHORT_NORMALIZE = (1.0/32768.0)
 chunk = 1024
@@ -137,7 +142,7 @@ stream = p.open(format = FORMAT,
     input = True,
     output = True,
     frames_per_buffer = chunk,
-    input_device_index=2)
+    input_device_index=2) # if you have more than 1 sound card you have to tune this, use system_info.py to see your index
 
 
 
