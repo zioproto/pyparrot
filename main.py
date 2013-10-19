@@ -2,7 +2,7 @@ import pyaudio
 import math
 import struct
 import wave
-
+import sys
 
 
 #Assuming Energy threshold upper than 30 dB
@@ -10,14 +10,14 @@ Threshold = 30
 
 SHORT_NORMALIZE = (1.0/32768.0)
 chunk = 1024
-FORMAT = pyaudio.paInt16
+FORMAT = pyaudio.paInt32
 CHANNELS = 1
-RATE = 16000
+RATE = 48000
 swidth = 2
 Max_Seconds = 10
 TimeoutSignal=((RATE / chunk * Max_Seconds) + 2)
 silence = True
-FileNameTmp = '/home/Recodings/2013/8/23/12-33.wav'
+FileNameTmp = './file.wav'
 Time=0
 all =[]
 
@@ -116,7 +116,8 @@ stream = p.open(format = FORMAT,
     rate = RATE,
     input = True,
     output = True,
-    frames_per_buffer = chunk)
+    frames_per_buffer = chunk,
+    input_device_index=2)
 
 
 
