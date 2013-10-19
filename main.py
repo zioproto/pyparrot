@@ -14,7 +14,7 @@ FORMAT = pyaudio.paInt32
 CHANNELS = 1
 RATE = 48000
 swidth = 2
-Max_Seconds = 10
+Max_Seconds = 30
 TimeoutSignal=((RATE / chunk * Max_Seconds) + 2)
 silence = True
 FileNameTmp = './file.wav'
@@ -51,6 +51,13 @@ def WriteSpeech(WriteData):
     wf.setframerate(RATE)
     wf.writeframes(WriteData)
     wf.close()
+    wr = wave.open(FileNameTmp,'rb')
+    data = wr.readframes(chunk)
+    while data != '':
+        stream.write(data)
+        data = wr.readframes(chunk)
+    wr.close()
+
 
 
 
@@ -62,6 +69,7 @@ def KeepRecord(TimeoutSignal, LastBlock):
         try:
             data = GetStream(chunk)
         except:
+            print "No more data to listen\n"
             continue
         #I chage here (new Ident)
         all.append(data)
@@ -88,6 +96,8 @@ def listen(silence,Time):
 
 
         rms_value = rms(input)
+
+        print "RMS is %d and Threshold is %d\n" % (rms_value,Threshold)
 
         if (rms_value > Threshold):
 
