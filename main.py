@@ -65,11 +65,21 @@ def KeepRecord(TimeoutSignal, LastBlock):
 
 
     all.append(LastBlock)
+    tail = 0
     for i in range(0, TimeoutSignal):
         try:
             data = GetStream(chunk)
+            rms_value = rms(data)
+            #print "RMS is %d and Threshold is %d\n" % (rms_value,Threshold)
+            if (rms_value < Threshold):
+                tail += 1
+                if tail >100: #tune this value to select how long should be silence before stopping recording
+                    print "break\n"
+                    break
+            else:
+                #print "tail reset\n"
+                tail =0
         except:
-            print "No more data to listen\n"
             continue
         #I chage here (new Ident)
         all.append(data)
@@ -97,7 +107,7 @@ def listen(silence,Time):
 
         rms_value = rms(input)
 
-        print "RMS is %d and Threshold is %d\n" % (rms_value,Threshold)
+        #print "RMS is %d and Threshold is %d\n" % (rms_value,Threshold)
 
         if (rms_value > Threshold):
 
