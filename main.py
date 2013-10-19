@@ -6,7 +6,7 @@ import sys
 
 
 #Assuming Energy threshold upper than 30 dB
-Threshold = 30
+Threshold = 25
 
 SHORT_NORMALIZE = (1.0/32768.0)
 chunk = 1024
@@ -42,9 +42,9 @@ def rms(frame):
 
 
 def WriteSpeech(WriteData):
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
+    #stream.stop_stream()
+    #stream.close()
+    #p.terminate()
     wf = wave.open(FileNameTmp, 'wb')
     wf.setnchannels(CHANNELS)
     wf.setsampwidth(p.get_sample_size(FORMAT))
