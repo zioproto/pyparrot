@@ -26,11 +26,6 @@ FileNameTmp = './file.wav'
 Time=0
 all =[]
 
-def GetStream(chunk):
-    return stream.read(chunk)
-
-
-
 def rms(frame):
         count = len(frame)/swidth
         format = "%dh"%(count)
@@ -73,7 +68,7 @@ def KeepRecord(TimeoutSignal, LastBlock):
     tail = 0
     for i in range(0, TimeoutSignal):
         try:
-            data = GetStream(chunk)
+            data = stream.read(chunk)
             rms_value = rms(data)
             #print "RMS is %d and Threshold is %d\n" % (rms_value,Threshold)
             if (rms_value < Threshold):
@@ -103,7 +98,7 @@ def listen(silence,Time):
 
         try:
 
-            input = GetStream(chunk)
+            input = stream.read(chunk)
 
         except:
 
